@@ -21,7 +21,7 @@ public class FriendCodeApplication {
         // For convenience, starts a browser if we can detect the correct way to launch it.
         // You would never include this on your final application or production environment.
         String port = context.getEnvironment().getProperty("local.server.port");
-        String localUrl = "http://localhost:" + port;
+        String localUrl = "http://localhost:" + port + "/product/admin";
         URL url = new URL(localUrl);
         if (Desktop.isDesktopSupported()) {
             Desktop.getDesktop().browse(url.toURI());

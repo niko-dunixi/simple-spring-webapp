@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>Admin::Product</title>
+</head>
+<body>
+<form action="/product" method="post">
+    Add Product:
+    <input name="name" type="text" placeholder="Product Name"/>
+    <input name="cost" type="text" placeholder="Product Cost"/>
+    <input name="description" type="text" placeholder="Product Description" cols="40" rows="5"/>
+    <input type="submit"/>
+</form>
+<form action="/product/delete" method="post">
+    Delete Product:
+    <input name="id" type="text" placeholder="Any Product Id"/>
+    <input type="submit"/>
+</form>
+<table>
+    <tr th:each="product: ${products}">
+        <td th:text="${product.id}"></td>
+        <td th:text="${product.name}"></td>
+        <td th:text="${product.description}"></td>
+        <td th:text="'$' + ${product.cost}"></td>
+    </tr>
+</table>
+</body>
+</html>

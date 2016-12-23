@@ -1,8 +1,6 @@
 package io.paulbaker.friendcode;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,6 +15,8 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
+@ToString
+@EqualsAndHashCode
 public class Product implements Serializable, Comparable<Product> {
 
     @Id
@@ -25,6 +25,9 @@ public class Product implements Serializable, Comparable<Product> {
 
     @Column(nullable = false)
     private String name;
+
+    @Column(nullable = false)
+    private Double cost;
 
     @Column(nullable = false)
     private String description;

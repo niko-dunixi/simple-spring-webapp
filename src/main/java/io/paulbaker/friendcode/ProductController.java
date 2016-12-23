@@ -17,6 +17,12 @@ public class ProductController {
     @Autowired
     private ProductRepository productRepository;
 
+    @RequestMapping(path = "/admin", method = RequestMethod.GET)
+    public String admin(Model model) {
+        model.addAttribute("products", productRepository.findAll());
+        return "productadmin";
+    }
+
     @RequestMapping(method = RequestMethod.GET)
     public String getProduct(@RequestParam(value = "id") long productId, Model model) {
         Product product = productRepository.findOne(productId);
@@ -24,17 +30,30 @@ public class ProductController {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public String createProduct(@RequestParam(value = "name") String name, @RequestParam(value = "description") String description, Model model) {
+    public String createProduct(@RequestParam(value = "name") String name, @RequestParam(value = "cost") double cost, @RequestParam(value = "description") String description, Model model) {
         Product product = new Product();
         product.setName(name);
+        product.setCost(cost);
         product.setDescription(description);
         product = productRepository.save(product);
         return applyProductToModel(product, model);
     }
 
+//    @RequestMapping(method = RequestMethod.DELETE)
+//    public String deleteProduct(@RequestParam(value = "id") long productId) {
+//        return postDeleteProduct(productId);
+//    }
+
+    @RequestMapping(path = "/delete", method = RequestMethod.POST)
+    public String postDeleteProduct(@RequestParam(value = "id") long productId) {
+        productRepository.delete(productId);
+        return "redirect:/product/admin";
+    }
+
     private String applyProductToModel(Product product, Model model) {
         model.addAttribute("id", product.getId());
         model.addAttribute("name", product.getName());
+        model.addAttribute("cost", product.getCost());
         model.addAttribute("description", product.getDescription());
         return "product";
     }
