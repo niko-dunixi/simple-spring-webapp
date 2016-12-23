@@ -19,6 +19,7 @@ public class FriendCodeApplication {
         // Starts the actual app
         ConfigurableApplicationContext context = SpringApplication.run(FriendCodeApplication.class, args);
         // For convenience, starts a browser if we can detect the correct way to launch it.
+        // You would never include this on your final application or production environment.
         String port = context.getEnvironment().getProperty("local.server.port");
         String localUrl = "http://localhost:" + port;
         URL url = new URL(localUrl);
