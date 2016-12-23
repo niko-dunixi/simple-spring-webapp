@@ -29,20 +29,15 @@ public class ProductController {
         return applyProductToModel(product, model);
     }
 
-    @RequestMapping(method = RequestMethod.POST)
-    public String createProduct(@RequestParam(value = "name") String name, @RequestParam(value = "cost") double cost, @RequestParam(value = "description") String description, Model model) {
+    @RequestMapping(path = "/create", method = RequestMethod.POST)
+    public String createProduct(@RequestParam(value = "name") String name, @RequestParam(value = "cost") double cost, @RequestParam(value = "description") String description) {
         Product product = new Product();
         product.setName(name);
         product.setCost(cost);
         product.setDescription(description);
-        product = productRepository.save(product);
-        return applyProductToModel(product, model);
+        productRepository.save(product);
+        return "redirect:/product/admin";
     }
-
-//    @RequestMapping(method = RequestMethod.DELETE)
-//    public String deleteProduct(@RequestParam(value = "id") long productId) {
-//        return postDeleteProduct(productId);
-//    }
 
     @RequestMapping(path = "/delete", method = RequestMethod.POST)
     public String postDeleteProduct(@RequestParam(value = "id") long productId) {
