@@ -16,8 +16,9 @@ import java.net.URL;
 public class FriendCodeApplication {
 
     public static void main(String[] args) throws IOException, URISyntaxException {
+        // Starts the actual app
         ConfigurableApplicationContext context = SpringApplication.run(FriendCodeApplication.class, args);
-
+        // For convenience, starts a browser if we can detect the correct way to launch it.
         String port = context.getEnvironment().getProperty("local.server.port");
         String localUrl = "http://localhost:" + port;
         URL url = new URL(localUrl);
@@ -25,12 +26,17 @@ public class FriendCodeApplication {
             Desktop.getDesktop().browse(url.toURI());
         } else {
             Runtime runtime = Runtime.getRuntime();
+            String[] commandArray = null;
             if (SystemUtils.IS_OS_WINDOWS) {
-                runtime.exec(new String[]{"start", localUrl});
+                commandArray = new String[]{"start", localUrl};
             } else if (SystemUtils.IS_OS_MAC) {
-                runtime.exec(new String[]{"open", localUrl});
+                commandArray = new String[]{"open", localUrl};
             } else if (SystemUtils.IS_OS_LINUX) {
-                runtime.exec(new String[]{"xdg-open", localUrl});
+                commandArray = new String[]{"xdg-open", localUrl};
+            }
+            // Launch if we detected the proper command.
+            if (commandArray != null) {
+                runtime.exec(commandArray);
             } else {
                 System.err.println("Browse to: " + localUrl);
             }
