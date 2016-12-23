@@ -18,12 +18,9 @@ public class ProductController {
     private ProductRepository productRepository;
 
     @RequestMapping(method = RequestMethod.GET)
-    public String getProduct(@RequestParam(value = "productId") long productId, Model model) {
+    public String getProduct(@RequestParam(value = "id") long productId, Model model) {
         Product product = productRepository.findOne(productId);
-        model.addAttribute("id", product.getId());
-        model.addAttribute("name", product.getName());
-        model.addAttribute("description", product.getDescription());
-        return "product";
+        return applyProductToModel(product, model);
     }
 
     @RequestMapping(method = RequestMethod.POST)
@@ -32,7 +29,14 @@ public class ProductController {
         product.setName(name);
         product.setDescription(description);
         product = productRepository.save(product);
-        return getProduct(product.getId(), model);
+        return applyProductToModel(product, model);
+    }
+
+    private String applyProductToModel(Product product, Model model) {
+        model.addAttribute("id", product.getId());
+        model.addAttribute("name", product.getName());
+        model.addAttribute("description", product.getDescription());
+        return "product";
     }
 
 }
