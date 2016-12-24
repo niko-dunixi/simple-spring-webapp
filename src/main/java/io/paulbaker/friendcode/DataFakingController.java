@@ -40,7 +40,7 @@ public class DataFakingController {
     @PostConstruct
     public void postConstruct() {
         List<Product> constructedProducts = new ArrayList<>();
-        for (int i = 0; i < 1000; i++) {
+        for (int i = 0; i < 20; i++) {
             Product product = new Product();
             product.setName(CollectionUtil.RandomElement(adjectives, random) + " " + CollectionUtil.RandomElement(products, random));
             product.setCost((random.nextInt(10000) + 1500d) / 100);
